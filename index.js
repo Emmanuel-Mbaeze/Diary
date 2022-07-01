@@ -8,8 +8,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/user", require("./router/Router"));
-app.use("/api/diary", require("./router/diaryrouter"));
+app.use("/api/user", require("./Router/Router"));
+app.use("/api/diary", require("./Router/diaryrouter"));
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Manel's Diary App" });

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config();
 const url =
-  "mongodb+srv://Emmanuel:123456789Somto@cluster0.firhs.mongodb.net/stfcreates?retryWrites=true&w=majority";
+  "mongodb+srv://Emmanuel:123456789Somto@cluster0.firhs.mongodb.net/i--jot?retryWrites=true&w=majority";
 mongoose
   .connect(url)
   .then(() => {

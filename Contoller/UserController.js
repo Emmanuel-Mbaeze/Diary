@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const cloudinary = require("../Connect/CLoudinary");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const verifiedEmail = require("../Connect/sendMail");
 
 // const transport = nodemailer.createTransport({
 //   service: "hotmail",
@@ -26,41 +27,25 @@ const signupUser = async (req, res) => {
     const { username, fullname, email, password } = req.body;
     const salt = await bcrypt.genSalt(10);
     const hashed = await bcrypt.hash(password, salt);
-    // const image = await cloudinary.uploader.upload(req.file.path);
-
-    const datatoken = await crypto.randomBytes(34).toString("hex");
-    const token = await jwt.sign({ datatoken }, "TheSecret", {
-      expiresIn: "1d",
-    });
+    const image = await cloudinary.uploader.upload(req.file.path);
 
     const user = await userModel.create({
       username,
       fullname,
       password: hashed,
       email,
-      // avatar: image.secure_url,
-      // avatarID: image.public_id,
-      verifiedtoken: token,
+      avatar: image.secure_url,
+      avatarID: image.public_id,
+      // verifiedtoken: token,
     });
+    // const online = "https://i--jot-backend.herokuapp.com";
+    // const local = "http://localhost:3000/confirm";
 
-    // const mailOptions = {
-    //   from: "no-replt@gmail.com",
-    //   to: email,
-    //   subject: "Account Verification",
-    //   html: `
-    //  <h4>Click <a
-    //  href="http://localhost:9090/api/user/verify/${user._id}/${token}"
-    //  >Link </a> to Verify Account</h4>
-    //  `,
-    // };
-
-    // transport.sendMail(mailOptions, (err, ...info) => {
-    //   if (err) {
-    //     console.log(err.message);
-    //   } else {
-    //     console.log("message sent", info.response);
-    //   }
-    // });
+    verifiedEmail(email, user._id)
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
 
     res.status(201).json({
       status: "check mail",

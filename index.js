@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 require("./Connect/Connect");
-const port = process.env.PORT;
+const port = process.env.PORT || 9090;
 const app = express();
 
 app.use(cors());

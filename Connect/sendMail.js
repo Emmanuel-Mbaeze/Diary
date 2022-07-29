@@ -45,7 +45,7 @@ const verifiedEmail = async (email, user) => {
       to: email,
       subject: "Account Verification",
       html: `
-           <h4>Thanks For Signing Up With sfcreate.Click <a
+           <h4>Thanks For Signing Up With i--jot Click <a
            href="http://localhost:3000/confirm/api/user/token/${user}/${token}"
            >Link </a> to Verify Account.</h4>
            `,
